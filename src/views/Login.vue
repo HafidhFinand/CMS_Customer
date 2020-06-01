@@ -2,7 +2,7 @@
   <div class=" container homepage">
       <img src="../assets/Login Image.png" alt="" class="ml-3">
       <div @submit.prevent="submitLogin" class="form-container">
-        <h2 class="text-center mt-1"><i class="fas fa-dice-d20 ml-2"></i> LOGIN</h2>
+        <h2 class="text-center mt-1"> LOGIN</h2>
         <form action="" class="mt-4">
             <div class="form-group">
                 <input type="text" name="email" placeholder="email" class="form-control" v-model="email">
@@ -41,7 +41,7 @@ export default {
           const token = data.Token
           localStorage.setItem('token', token)
           this.$store.commit('changeLoginStatus', true)
-          this.$router.push('/dashboard')
+          this.$router.push('/')
         })
         .catch(err => {
           err = err.response

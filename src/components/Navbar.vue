@@ -1,15 +1,15 @@
 <template>
     <nav class="navbar navbar-expand-sm navbar-dark bg-secondary mb-3">
         <div class="container">
-            <a @click.prevent="nothing" class="navbar-brand" href=""><i class="fas fa-stethoscope ml-2"></i> Hacktiv-19</a>
+            <a @click.prevent="nothing" class="navbar-brand" href=""><i class="fas fa-shopping-basket ml-2"></i>  E-COMMERCE</a>
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a @click.prevent="goToDashboard" class="nav-link" href="#">COUNTRIES</a>
+                <li v-show="isLogin" class="nav-item">
+                    <a @click.prevent="goToDashboard" class="nav-link" href="#">MY CART</a>
                 </li>
-                <li class="nav-item">
+                <li v-show="!isLogin" class="nav-item">
                     <a @click.prevent="goToLoginPage" class="nav-link" href="#">LOGIN</a>
                 </li>
-                <li class="nav-item">
+                <li v-show="isLogin" class="nav-item">
                     <a @click.prevent="logout" class="nav-link" href="#">LOGOUT</a>
                 </li>
             </ul>
@@ -20,6 +20,11 @@
 <script>
 export default {
   name: 'Navbar',
+  computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    }
+  },
   methods: {
     logout () {
       localStorage.clear()
@@ -34,7 +39,7 @@ export default {
 </script>
 
 <style>
-    ul li {
-        font-size: 1rem;
-    }
+  ul li {
+    font-size: 1rem;
+  }
 </style>
