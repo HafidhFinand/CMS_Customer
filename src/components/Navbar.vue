@@ -4,7 +4,7 @@
             <a @click.prevent="nothing" class="navbar-brand" href=""><i class="fas fa-shopping-basket ml-2"></i>  E-COMMERCE</a>
             <ul class="navbar-nav">
                 <li v-show="isLogin" class="nav-item">
-                    <a @click.prevent="goToDashboard" class="nav-link" href="#">MY CART</a>
+                    <a @click.prevent="goToMyCart" class="nav-link" href="#">MY CART</a>
                 </li>
                 <li v-show="!isLogin" class="nav-item">
                     <a @click.prevent="goToLoginPage" class="nav-link" href="#">LOGIN</a>
@@ -33,6 +33,9 @@ export default {
     },
     goToLoginPage () {
       this.$router.push('/login')
+    },
+    goToMyCart () {
+      this.$router.push('/mycart')
     }
   }
 }

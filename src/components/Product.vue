@@ -18,6 +18,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
   name: 'Product',
   props: ['product'],
@@ -36,7 +37,12 @@ export default {
         }
       })
         .then(response => {
-          this.$router.push('/shoppingcart')
+          Swal.fire(
+            'Good job!',
+            'Succsessfully Add to Shopping Cart!',
+            'success'
+          )
+          this.$router.push('/mycart')
         })
         .catch(err => {
           err = err.response

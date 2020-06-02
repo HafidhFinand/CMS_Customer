@@ -7,8 +7,16 @@
 <script>
 export default {
   name: 'App',
+  methods: {
+    checkLoginStatus () {
+      if (localStorage.token) {
+        this.$store.commit('changeLoginStatus', true)
+      }
+    }
+  },
   created () {
     this.$store.dispatch('fetchListProducts')
+    this.checkLoginStatus()
   }
 }
 </script>
