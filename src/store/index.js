@@ -23,7 +23,6 @@ export default new Vuex.Store({
   },
   actions: {
     fetchListProducts ({ commit }) {
-      console.log('haha')
       axios.get('http://localhost:3000/products/customer?s=')
         .then(response => {
           let { data } = response
@@ -62,7 +61,6 @@ export default new Vuex.Store({
         .then(response => {
           let { data } = response
           data = data.ShoppingCharts
-          console.log(data)
           commit('getShoppingCart', data)
         })
         .catch(err => {
