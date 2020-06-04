@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <!-- <img src="../assets/wallet.png" alt=""> -->
+    <h4 class="text-center">Insert Your Credit Card Information</h4>
+    <p class="ml-2">Card details</p>
     <stripe-elements
       ref="elementsRef"
       :pk="publishableKey"
@@ -9,13 +12,14 @@
       @loading="loading = $event"
     >
     </stripe-elements>
-    <button @click="submit">Pay ${{amount / 100}}</button>
+    <button @click="submit" class="btn btn-success">Pay {{ priceInRupiah(amount) }}</button>
   </div>
 </template>
 
 <script>
 import { StripeElements } from 'vue-stripe-checkout'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
   components: {
     StripeElements
@@ -44,9 +48,12 @@ export default {
       }
       this.amount = sum
     },
+    priceInRupiah (price) {
+      const harga = price.toLocaleString()
+      return `Rp. ${harga}.00`
+    },
     tokenCreated (token) {
       this.token = token
-      this.calculateAmount()
       // for additional charge objects go to https://stripe.com/docs/api/charges/object
       this.charge = {
         source: token.id,
@@ -70,21 +77,39 @@ export default {
         }
       })
         .then(response => {
-          console.log('Transaksi Berhasil')
+          Swal.fire(
+            'Good job!',
+            'Succsessfully Pay Product!',
+            'success'
+          )
           this.$store.dispatch('fetchShoppingCart')
+          this.$modal.hide('hello-world')
         })
         .catch(err => {
           console.log(err)
         })
     }
+  },
+  created () {
+    this.calculateAmount()
   }
 }
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap');
   .wrapper {
     width: 600px;
     margin: 0 auto;
     height: 100%;
+  }
+  .wrapper h4 {
+    margin-top: 20px;
+    margin-bottom: 60px;
+    font-family: 'Open Sans Condensed', sans-serif;
+  }
+  .wrapper button {
+    margin-left: 180px;
+    width: 235px;
   }
 </style>

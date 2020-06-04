@@ -9,7 +9,13 @@
                 <div class="mini-body ml-4">
                     <p class="text-dark"> {{ priceInRupiah(product.price) }}</p>
                     <p class="text-dark"> Stock: {{ product.stock }}</p>
-                    <button @click.prevent="addToCart" class="btn bg-secondary text-white">Add To Cart </button>
+                    <a @click.prevent="addToCart" href="">
+                      <i class="fas fa-shopping-cart mt-4 ml-2 fa-2x text-secondary"></i>
+                      <span class="ml-2 text-secondary">Add To Cart</span>
+                    </a>
+                    <!-- <button @click.prevent="addToCart" class="btn bg-secondary text-white btn-cart">
+                      <i class="fas fa-shopping-cart mt-4 ml-2 fa-2x"></i>
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -22,33 +28,48 @@ import Swal from 'sweetalert2'
 export default {
   name: 'Product',
   props: ['product'],
+  computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    }
+  },
   methods: {
     priceInRupiah (price) {
       const harga = price.toLocaleString()
       return `Rp. ${harga}.00`
     },
     addToCart () {
-      axios.post('http://localhost:3000/shoppingchart', {
-        ProductId: this.product.id,
-        quantity: 1
-      }, {
-        headers: {
-          token: localStorage.token
-        }
-      })
-        .then(response => {
-          Swal.fire(
-            'Good job!',
-            'Succsessfully Add to Shopping Cart!',
-            'success'
-          )
-          this.$router.push('/mycart')
+      if (this.isLogin) {
+        axios.post('http://localhost:3000/shoppingchart', {
+          ProductId: this.product.id,
+          quantity: 1
+        }, {
+          headers: {
+            token: localStorage.token
+          }
         })
-        .catch(err => {
-          err = err.response
-          const { data } = err
-          console.log(data)
+          .then(response => {
+            Swal.fire(
+              'Good job!',
+              'Succsessfully Add to Shopping Cart!',
+              'success'
+            )
+            this.$store.dispatch('fetchShoppingCart')
+            this.$store.dispatch('fetchListProducts')
+            this.$router.push('/mycart')
+          })
+          .catch(err => {
+            err = err.response
+            const { data } = err
+            console.log(data)
+          })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please Login First'
         })
+      }
     }
   }
 }
@@ -78,7 +99,6 @@ export default {
         height: 140px;
         margin-left: 0;
     }
-
     .list-product .card-body div p {
         color: white;
     }

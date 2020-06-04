@@ -11,14 +11,14 @@ import 'bootstrap/dist/css/bootstrap.css'
 // Import Fontawesome
 import { library, dom } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faShoppingBasket, faPlusCircle, faMinusCircle, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faShoppingBasket, faPlusCircle, faMinusCircle, faTrashAlt, faArrowAltCircleLeft, faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 
 import VModal from 'vue-js-modal'
 Vue.use(VModal)
 
 dom.watch()
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-library.add(faShoppingBasket, faPlusCircle, faMinusCircle, faTrashAlt)
+library.add(faShoppingBasket, faPlusCircle, faMinusCircle, faTrashAlt, faArrowAltCircleLeft, faShoppingCart)
 
 Vue.config.productionTip = false
 

@@ -42,7 +42,8 @@ export default {
   },
   data () {
     return {
-      quantity: this.shoppingCart.quantity
+      quantity: this.shoppingCart.quantity,
+      input: 0
     }
   },
   watch: {
@@ -53,9 +54,11 @@ export default {
   methods: {
     addQuantity () {
       this.quantity += 1
+      this.input = 1
     },
     subtractQuantity () {
       this.quantity -= 1
+      this.input = -1
     },
     priceInRupiah (price) {
       const harga = price.toLocaleString()
@@ -64,7 +67,7 @@ export default {
     updateShoppingCart: _.debounce(function () {
       axios.post('http://localhost:3000/shoppingchart', {
         ProductId: this.shoppingCart.Product.id,
-        quantity: this.quantity
+        quantity: this.input
       }, {
         headers: {
           token: localStorage.token
@@ -72,6 +75,7 @@ export default {
       })
         .then(response => {
           this.$store.dispatch('fetchShoppingCart')
+          this.$store.dispatch('fetchListProducts')
         })
         .catch(err => {
           err = err.response
@@ -88,6 +92,7 @@ export default {
         .then(response => {
           console.log('Success delete')
           this.$store.dispatch('fetchShoppingCart')
+          this.$store.dispatch('fetchListProducts')
         })
         .catch(err => {
           err = err.response

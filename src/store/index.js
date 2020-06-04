@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     isLogin: '',
     listProducts: '',
-    shoppingCarts: []
+    shoppingCarts: [],
+    transactions: []
   },
   mutations: {
     changeLoginStatus (state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     getShoppingCart (state, payload) {
       this.state.shoppingCarts = payload
+    },
+    getTransactions (state, payload) {
+      this.state.transactions = payload
     }
   },
   actions: {
@@ -62,6 +66,24 @@ export default new Vuex.Store({
           let { data } = response
           data = data.ShoppingCharts
           commit('getShoppingCart', data)
+        })
+        .catch(err => {
+          err = err.response
+          const { data } = err
+          console.log(data)
+        })
+    },
+    fetchTransactions ({ commit }) {
+      axios.get('http://localhost:3000/users/transactions', {
+        headers: {
+          token: localStorage.token
+        }
+      })
+        .then(response => {
+          let { data } = response
+          data = data.Transactions
+          console.log(data)
+          commit('getTransactions', data)
         })
         .catch(err => {
           err = err.response

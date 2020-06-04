@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import MyCart from '../views/MyCart.vue'
-import ShoppingCart from '../views/ShoppingCart.vue'
+import Register from '../views/Register.vue'
+import MyTransaction from '../views/MyTransaction.vue'
 
 Vue.use(VueRouter)
 
@@ -24,9 +25,14 @@ const routes = [
     component: Login
   },
   {
-    path: '/shoppingcart',
-    name: 'ShoppingCart',
-    component: ShoppingCart
+    path: '/register',
+    name: 'Register',
+    component: Register
+  },
+  {
+    path: '/mytransaction',
+    name: 'MyTransaction',
+    component: MyTransaction
   }
 ]
 

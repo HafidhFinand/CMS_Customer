@@ -2,8 +2,10 @@
 <div>
     <navbar></navbar>
     <cart v-for="(shoppingCart, i) in shoppingCarts" :key="i" :shoppingCart="shoppingCart"></cart>
-    <h4 class="text-center mt-2">Total Harga: {{ priceInRupiah(totalPrice) }}</h4>
-    <button @click.prevent="changeIsPaymentStatus" class="btn btn-success">CHECKOUT</button>
+    <h4 class="text-center mt-5 mb-5">
+      Total Price: {{ priceInRupiah(totalPrice) }}
+      <button @click.prevent="changeIsPaymentStatus" class="btn ml-2 btn-success">CHECKOUT</button>
+    </h4>
     <modal name="hello-world">
       <StripeCheckout v-show="isPayment"></StripeCheckout>
     </modal>
@@ -25,7 +27,8 @@ export default {
     return {
       totalPrice: '',
       isPayment: false,
-      modalOpen: false
+      modalOpen: false,
+      isShoppingCartEmpty: ''
     }
   },
   methods: {
@@ -50,6 +53,7 @@ export default {
         sum += (Number(this.shoppingCarts[i].Product.price) * Number(this.shoppingCarts[i].quantity))
       }
       this.totalPrice = sum
+      this.isShoppingCartEmpty = true
     }
   },
   created () {
