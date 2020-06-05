@@ -16,7 +16,11 @@ export default new Vuex.Store({
       this.state.isLogin = payload
     },
     getProductsData (state, payload) {
-      this.state.listProducts = payload
+      const unFilteredProducts = payload
+      const filteredProducts = unFilteredProducts.filter(element => {
+        return element.stock > 0
+      })
+      this.state.listProducts = filteredProducts
     },
     getShoppingCart (state, payload) {
       this.state.shoppingCarts = payload

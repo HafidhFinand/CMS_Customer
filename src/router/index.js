@@ -17,7 +17,14 @@ const routes = [
   {
     path: '/mycart',
     name: 'MyCart',
-    component: MyCart
+    component: MyCart,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   },
   {
     path: '/login',
@@ -32,7 +39,14 @@ const routes = [
   {
     path: '/mytransaction',
     name: 'MyTransaction',
-    component: MyTransaction
+    component: MyTransaction,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.token) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
   }
 ]
 

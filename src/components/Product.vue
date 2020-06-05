@@ -13,9 +13,6 @@
                       <i class="fas fa-shopping-cart mt-4 ml-2 fa-2x text-secondary"></i>
                       <span class="ml-2 text-secondary">Add To Cart</span>
                     </a>
-                    <!-- <button @click.prevent="addToCart" class="btn bg-secondary text-white btn-cart">
-                      <i class="fas fa-shopping-cart mt-4 ml-2 fa-2x"></i>
-                    </button> -->
                 </div>
             </div>
         </div>
@@ -38,6 +35,13 @@ export default {
       const harga = price.toLocaleString()
       return `Rp. ${harga}.00`
     },
+    goToMyCart () {
+      const self = this
+      setTimeout(function () {
+        console.log('aseeek')
+        self.$router.push('/mycart')
+      }, 1000)
+    },
     addToCart () {
       if (this.isLogin) {
         axios.post('http://localhost:3000/shoppingchart', {
@@ -56,7 +60,7 @@ export default {
             )
             this.$store.dispatch('fetchShoppingCart')
             this.$store.dispatch('fetchListProducts')
-            this.$router.push('/mycart')
+            this.goToMyCart()
           })
           .catch(err => {
             err = err.response
